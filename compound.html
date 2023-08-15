@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>COMPOUNDING</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      color: #24231a;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 8px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 400px;
+      margin: 20px auto;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>COMPOUNDING</h1>
+
+  <form>
+    <label for="principal">Principal Amount:</label>
+    <input type="number" id="principal" name="principal" required>
+
+    <label for="interest">Interest Rate (%):</label>
+    <input type="number" id="interest" name="interest" required>
+
+    <label for="cycles">Number of Cycles:</label>
+    <input type="number" id="cycles" name="cycles" required>
+
+    <input type="submit" value="Calculate">
+  </form>
+
+  <table id="resultTable">
+    <tr>
+      <th>Cycle</th>
+      <th>Total Value</th>
+    </tr>
+  </table>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var principal = parseInt(document.getElementById('principal').value);
+      var interest = parseFloat(document.getElementById('interest').value) / 100;
+      var cycles = parseInt(document.getElementById('cycles').value);
+
+      var totalValue = principal;
+
+      for (var cycle = 0; cycle < cycles; cycle++) {
+        for (var month = 0; month < 12; month++) {
+          totalValue += totalValue * interest;  // Compound the interest
+        }
+        
+        var table = document.getElementById('resultTable');
+        var row = table.insertRow(-1);
+        var cycleCell = row.insertCell(0);
+        var valueCell = row.insertCell(1);
+
+        cycleCell.textContent = cycle + 1;
+        valueCell.textContent = '₹' + Math.round(totalValue).toLocaleString('en-IN');
+      }
+    });
+  </script>
+
+</body>
+</html>
